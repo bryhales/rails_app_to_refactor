@@ -10,11 +10,15 @@ class User < ApplicationRecord
   validates :email, presence: true, format: URI::MailTo::EMAIL_REGEXP, uniqueness: true
   validates :token, presence: true, length: { is: 36 }, uniqueness: true
   validates :password_digest, presence: true, length: { is: 64 }
-
+  
+  before_create :validate_password
   after_create :create_default_todo_list
   after_commit :send_welcome_email, on: :create
 
   private
+    def validate_password
+      
+    end
 
     def create_default_todo_list
       todo_lists.create!(title: 'Default', default: true)
