@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one :default_todo_list, ->(user) { user.todo_lists.default }, class_name: 'TodoList'
 
+  #TODO: re group validations
   validates :name, presence: true
   validates :email, presence: true, format: URI::MailTo::EMAIL_REGEXP, uniqueness: true
   validates :token, presence: true, length: { is: 36 }, uniqueness: true

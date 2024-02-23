@@ -1,0 +1,3 @@
+
+validate it receives the right params
+validate teh password and confirmation mateches

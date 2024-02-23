@@ -30,6 +30,7 @@ class Todo < ApplicationRecord
     order(column_name => order)
   }
 
+  #TODO: move this to a service - the update action- and prevent using callbacks.
   before_validation on: :update do
     case completed
     when 'true' then complete
@@ -37,6 +38,7 @@ class Todo < ApplicationRecord
     end
   end
 
+  #TODO: re group validtions.
   validates :title, presence: true
   validates :due_at, presence: true, allow_nil: true
   validates :completed_at, presence: true, allow_nil: true
