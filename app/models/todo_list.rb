@@ -9,9 +9,7 @@ class TodoList < ApplicationRecord
   scope :non_default, -> { where(default: false) }
 
   scope :order_by, ->(params) {
-    order = params[:order]&.strip&.downcase == 'asc' ? :asc : :desc
-
-    sort_by = params[:sort_by]&.strip&.downcase
+    order, sort_by = TodoOrdering.extract_sort_and_order(params)
 
     column_name = column_names.excluding('id', 'user_id').include?(sort_by) ? sort_by : 'id'
 
