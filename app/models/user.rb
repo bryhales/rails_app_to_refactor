@@ -7,7 +7,9 @@ class User < ApplicationRecord
   has_one :default_todo_list, ->(user) { user.todo_lists.default }, class_name: 'TodoList'
 
   validates :name, presence: true
+  # TODO: ensure email uniqueness constraint enforced at schema level
   validates :email, presence: true, format: URI::MailTo::EMAIL_REGEXP, uniqueness: true
+  # TODO: ensure token presence and uniqueness constraints enforced at schema level
   validates :token, presence: true, length: { is: 36 }, uniqueness: true
   validates :password_digest, presence: true, length: { is: 64 }
 

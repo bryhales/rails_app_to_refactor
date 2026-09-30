@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   def create
+    # TODO: make this private
     user_params = params.require(:user).permit(:name, :email, :password, :password_confirmation)
 
     password = user_params[:password].to_s.strip
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
     errors[:password] = ["can't be blank"] if password.blank?
     errors[:password_confirmation] = ["can't be blank"] if password_confirmation.blank?
 
+    # TODO: consider refactoring error-handling to be a bit more DRY
     if errors.present?
       render_json(422, user: errors)
     else
@@ -26,6 +28,7 @@ class UsersController < ApplicationController
           password_digest: password_digest
         )
 
+        # TODO: refactor user.save to explicitly check for persistence before issuing 201 response
         if user.save
           render_json(201, user: user.as_json(only: [:id, :name, :token]))
         else

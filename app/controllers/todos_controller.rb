@@ -13,6 +13,7 @@ class TodosController < ApplicationController
     render_json(404, key => { id: not_found.id, message: 'not found' })
   end
 
+  # TODO: abstract out serialization logic to separate module
   def index
     todos = @todos.filter_by_status(params).order_by(params).map(&:serialize_as_json)
 
@@ -63,8 +64,10 @@ class TodosController < ApplicationController
 
   private
 
+    # TODO: consider refactoring to be a bit more explicit in return value
     def todo_lists_only_non_default? = false
 
+    # TODO: split this out into multiple methods
     def set_todos
       scope =
         if params[:todo_list_id].present?
